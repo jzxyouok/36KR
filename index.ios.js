@@ -4,7 +4,7 @@
  * @flow
  */
 
-//var Message = require('Message')
+var Mess = require('./mess');
 
 import React, {
     AppRegistry,
@@ -18,7 +18,6 @@ import React, {
     Image,
     TabBarIOS,
 } from 'react-native';
-
 
 var SYNavigator = React.createClass ({
     getInitialState: function () {
@@ -35,45 +34,27 @@ var SYNavigator = React.createClass ({
         return(
              <TabBarIOS tintColor="#45b640" barTintColor="#F5F6F8">
                 <TabBarIOS.Item
-                    icon = {require('./resource/message.png')}
-                    selectedIcon = {require('./resource/message_fill.png')}
-                    onPress = {() => this.selectedTab('Message')}
+                    icon = {require('image!message')}
+                    selectedIcon = {require('image!message_fill')}
+                    onPress = {() => this.selectTab('Message')}
                     title = '新闻'
                     selected = {this.state.selectedTab === 'Message'}
                 >
-                    {this.addNavigator(Message, '新闻', require('./resource/reply.png'))}
+                    {this.addNavigator(Message, '新闻', require('image!plus'))}
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
-                    icon = {require('./resource/contact.png')}
-                    selectedIcon = {require('./resource/contact_fill.png')}
-                    onPress = {() => this.selectedTab('Contact')}
+                    icon = {require('image!contact')}
+                    selectedIcon = {require('image!contact_fill')}
+                    onPress = {() => this.selectTab('contact')}
                     title = '融资'
-                    selected = {this.state.selectedTab === 'Message'}
+                    selected = {this.state.selectedTab === 'contact'}
                 >
-                    {this.addNavigator(Message, '融资', require('./resource/reply.png'))}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    icon = {require('./resource/found.png')}
-                    selectedIcon = {require('./resource/found_fill.png')}
-                    onPress = {() => this.selectedTab('Found')}
-                    title = '众筹'
-                    selected = {this.state.selectedTab === 'Message'}
-                >
-                    {this.addNavigator(Message, '众筹', require('./resource/reply.png'))}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    icon = {require('./resource/me.png')}
-                    selectedIcon = {require('./resource/me_fill.png')}
-                    onPress = {() => this.selectedTab('Me')}
-                    title = '消息'
-                    selected = {this.state.selectedTab === 'Message'}
-                >
-                    {this.addNavigator(Message, '消息', require('./resource/reply.png'))}
+                  {this.addNavigator(Mess, '融资', require('image!found_fill'))}
                 </TabBarIOS.Item>
             </TabBarIOS>
         )
     },
-    addNavigator: function (component, title, rightBottonIcon) {
+    addNavigator: function (component, title, rightButtonIcon) {
         return(
             <NavigatorIOS
                 style={styles.container}
@@ -81,9 +62,9 @@ var SYNavigator = React.createClass ({
                     title: title,
                     component: component,
                 }}
-                rightBottonIcon = {rightBottonIcon}
+                rightButtonIcon = {rightButtonIcon}
                 configureScene={() => {
-                    return Navigator.SceneConfigs.VerticalDownSwipeJump;
+                    return NavigatorIOS.SceneConfigs.VerticalDownSwipeJump;
                 }}
                 renderScene={(route, navigator) => {
                     let Component = route.component;
@@ -164,7 +145,6 @@ var Message = React.createClass ({
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) =>this.renderRow(rowData)}
             />
-
         );
     },
     renderRow: function (rowData:string) {
