@@ -4,6 +4,8 @@
  * @flow
  */
 
+import TabNavigator from 'react-native-tab-navigator';
+
 var Mess = require('./mess');
 
 import React, {
@@ -32,26 +34,51 @@ var SYNavigator = React.createClass ({
     },
     render : function () {
         return(
-             <TabBarIOS tintColor="#45b640" barTintColor="#F5F6F8">
-                <TabBarIOS.Item
-                    icon = {require('image!message')}
-                    selectedIcon = {require('image!message_fill')}
-                    onPress = {() => this.selectTab('Message')}
-                    title = '新闻'
-                    selected = {this.state.selectedTab === 'Message'}
-                >
+            // <TabBarIOS tintColor="#45b640" barTintColor="#F5F6F8">
+            //    <TabBarIOS.Item
+            //        icon = {require('image!message')}
+            //        selectedIcon = {require('image!message_fill')}
+            //        onPress = {() => this.selectTab('Message')}
+            //        title = '新闻'
+            //        selected = {this.state.selectedTab === 'Message'}
+            //    >
+            //        {this.addNavigator(Message, '新闻', require('image!plus'))}
+            //    </TabBarIOS.Item>
+            //    <TabBarIOS.Item
+            //        icon = {require('image!contact')}
+            //        selectedIcon = {require('image!contact_fill')}
+            //        onPress = {() => this.selectTab('contact')}
+            //        title = '融资'
+            //        selected = {this.state.selectedTab === 'contact'}
+            //    >
+            //      {this.addNavigator(Mess, '融资', require('image!found_fill'))}
+            //    </TabBarIOS.Item>
+            //</TabBarIOS>
+
+            <TabNavigator
+                navTintColor='ffffff'
+                navBarTintColor='333333'
+                tabTintColor='orange'
+                tabBarTintColor='333333'>
+                <TabNavigator.Item
+                selected={this.state.selectedTab === 'Message'}
+                title="新闻"
+                renderIcon={() => <Image source={require('image!message')} />}
+                renderSelectedIcon={() => <Image source={require('image!message_fill')} />}
+                //badgeText="1"
+                onPress={() => this.setState({ selectedTab: 'Message' })}>
                     {this.addNavigator(Message, '新闻', require('image!plus'))}
-                </TabBarIOS.Item>
-                <TabBarIOS.Item
-                    icon = {require('image!contact')}
-                    selectedIcon = {require('image!contact_fill')}
-                    onPress = {() => this.selectTab('contact')}
-                    title = '融资'
-                    selected = {this.state.selectedTab === 'contact'}
-                >
-                  {this.addNavigator(Mess, '融资', require('image!found_fill'))}
-                </TabBarIOS.Item>
-            </TabBarIOS>
+                </TabNavigator.Item>
+                <TabNavigator.Item
+                selected={this.state.selectedTab === 'Contact'}
+                title="融资"
+                renderIcon={() => <Image source={require('image!contact')} />}
+                renderSelectedIcon={() => <Image source={require('image!contact_fill')} />}
+                onPress={() => this.setState({ selectedTab: 'Contact' })}
+defaultTab>
+                    {this.addNavigator(Mess, '融资', require('image!found_fill'))}
+                </TabNavigator.Item>
+            </TabNavigator>
         )
     },
     addNavigator: function (component, title, rightButtonIcon) {
